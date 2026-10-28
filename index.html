@@ -7,6 +7,7 @@
 <title>Блять, опять ты</title>
 
 <style>
+/* Исправлен селектор с '-' на '*' */
 * {
   box-sizing: border-box;
 }
@@ -305,7 +306,7 @@ button.primary:hover {
     <h1>Блять,<br><span>опять ты.</span></h1>
 
     <p>
-      Подозреваемая: mzfkrs.<br>
+      Подозреваемая: гражданка, которая занимает чужие мысли.<br>
       Особые приметы: загадочная, вредная и подозрительно милая.
     </p>
 
@@ -315,7 +316,7 @@ button.primary:hover {
       Мы всё равно будем делать вид, что верим.
     </p>
 
-    <button class="primary" onclick="start()">
+    <button type="button" class="primary" onclick="start()">
       Ладно, начинай допрос →
     </button>
 
@@ -350,11 +351,11 @@ button.primary:hover {
     </p>
 
     <p>
-      Вот такая вот хуйня, собачка.
+      Вот такая вот фигня.
       Можешь теперь делать вид, что не заметила. 😏
     </p>
 
-    <button class="primary" onclick="reply()">
+    <button type="button" class="primary" onclick="reply()">
       Вынести вердикт 👀
     </button>
 
@@ -363,14 +364,14 @@ button.primary:hover {
         Вердикт принят. Но учти: дело ещё не закрыто. 😌
       </p>
 
-      <button onclick="copyMessage()">
+      <button type="button" onclick="copyMessage()">
         📋 Скопировать мой ответ
       </button>
 
       <p class="small" id="copyStatus"></p>
     </div>
 
-    <button onclick="restart()">
+    <button type="button" onclick="restart()">
       Начать допрос заново ↻
     </button>
   </section>
@@ -458,6 +459,7 @@ function showQuestion() {
 
   item.a.forEach((answer, index) => {
     const btn = document.createElement("button");
+    btn.type = "button";
     btn.textContent = answer;
     btn.onclick = () => choose(index);
     answers.appendChild(btn);
@@ -479,8 +481,6 @@ function choose(index) {
 
   epicFinale();
 }
-
-/* БОЛЬШОЕ СЕРДЦЕ И ЧЕТЫРЕ ЗАЛПА ФЕЙЕРВЕРКА */
 
 function epicFinale() {
   if (document.querySelector(".heart-burst")) return;
