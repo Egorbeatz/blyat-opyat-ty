@@ -3,184 +3,334 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
+<meta name="theme-color" content="#090a10">
 <title>Блять, опять ты</title>
+
 <style>
-*{box-sizing:border-box}
-:root{color-scheme:dark}
-body{
-  margin:0;min-height:100vh;
-  display:flex;align-items:center;justify-content:center;
-  padding:22px;
-  font-family:Arial,Helvetica,sans-serif;
-  color:#f3f2ff;
+* {
+  box-sizing: border-box;
+}
+
+:root {
+  color-scheme: dark;
+}
+
+body {
+  margin: 0;
+  min-height: 100vh;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 22px;
+  font-family: Arial, Helvetica, sans-serif;
+  color: #f3f2ff;
   background:
-    radial-gradient(ellipse at 15% 15%,#29204c 0,transparent 45%),
-    radial-gradient(ellipse at 90% 85%,#102d48 0,transparent 40%),
+    radial-gradient(ellipse at 15% 15%, #29204c 0, transparent 45%),
+    radial-gradient(ellipse at 90% 85%, #102d48 0, transparent 40%),
     #090a10;
 }
-.card{
-  width:min(100%,570px);padding:clamp(25px,6vw,46px);
-  background:rgba(18,19,31,.92);
-  border:1px solid #34334b;border-radius:25px;
-  box-shadow:0 25px 90px #0008;
-  text-align:center;animation:appear .6s ease;
+
+.card {
+  position: relative;
+  width: min(100%, 570px);
+  padding: clamp(25px, 6vw, 46px);
+  background: rgba(18, 19, 31, .94);
+  border: 1px solid #34334b;
+  border-radius: 25px;
+  box-shadow: 0 25px 90px #0008;
+  text-align: center;
+  animation: appear .6s ease;
 }
-.tag{
-  display:inline-block;padding:8px 12px;border-radius:30px;
-  background:#25203c;color:#c8b9ff;font-size:12px;
-  letter-spacing:1.5px;text-transform:uppercase;
+
+.tag {
+  display: inline-block;
+  padding: 8px 12px;
+  border-radius: 30px;
+  background: #25203c;
+  color: #c8b9ff;
+  font-size: 12px;
+  letter-spacing: 1.5px;
+  text-transform: uppercase;
 }
-h1{font-size:clamp(34px,8vw,52px);line-height:1.05;margin:23px 0 14px;letter-spacing:-1.8px}
-h1 span{color:#a994ff}
-p{color:#b8b8ca;line-height:1.7;font-size:16px}
-.question{font-size:23px;color:#fff;line-height:1.4;margin:27px 0}
-button{
-  width:100%;padding:15px 18px;margin-top:11px;
-  border:1px solid #45435e;border-radius:13px;
-  background:#1b1b2b;color:#f7f5ff;font-size:15px;
-  cursor:pointer;transition:.2s;
+
+h1 {
+  font-size: clamp(34px, 8vw, 52px);
+  line-height: 1.08;
+  margin: 23px 0 14px;
+  letter-spacing: -1.8px;
 }
-button:hover{transform:translateY(-2px);border-color:#a994ff;background:#29243e}
-button.primary{background:linear-gradient(110deg,#6550b5,#345d91);border:0}
-button.primary:hover{filter:brightness(1.15)}
-.small{font-size:12px;color:#77778e;margin-top:25px}
-.progress{height:4px;background:#252538;border-radius:10px;overflow:hidden;margin-top:25px}
-#bar{height:100%;width:0;background:linear-gradient(90deg,#9a75ff,#55c9ff);transition:width .35s}
-#counter{font-size:12px;color:#85859f;margin-top:12px}
-.hidden{display:none}
-.emoji{font-size:42px;margin-top:22px}
-@keyframes appear{from{opacity:0;transform:translateY(12px)}to{opacity:1;transform:translateY(0)}}
-  /* === ФИНАЛЬНОЕ СЕРДЦЕ === */
+
+h1 span {
+  color: #a994ff;
+}
+
+p {
+  color: #b8b8ca;
+  line-height: 1.7;
+  font-size: 16px;
+}
+
+.question {
+  font-size: 23px;
+  color: #fff;
+  line-height: 1.4;
+  margin: 27px 0;
+}
+
+button {
+  width: 100%;
+  padding: 15px 18px;
+  margin-top: 11px;
+  border: 1px solid #45435e;
+  border-radius: 13px;
+  background: #1b1b2b;
+  color: #f7f5ff;
+  font-size: 15px;
+  cursor: pointer;
+  transition: transform .2s, border-color .2s, background .2s;
+}
+
+button:hover {
+  transform: translateY(-2px);
+  border-color: #a994ff;
+  background: #29243e;
+}
+
+button:focus-visible {
+  outline: 2px solid #a994ff;
+  outline-offset: 3px;
+}
+
+button.primary {
+  background: linear-gradient(110deg, #6550b5, #345d91);
+  border: 0;
+}
+
+button.primary:hover {
+  filter: brightness(1.15);
+}
+
+.small {
+  font-size: 12px;
+  color: #85859f;
+  margin-top: 25px;
+}
+
+.progress {
+  height: 4px;
+  background: #252538;
+  border-radius: 10px;
+  overflow: hidden;
+  margin-top: 18px;
+}
+
+#bar {
+  height: 100%;
+  width: 0;
+  background: linear-gradient(90deg, #9a75ff, #55c9ff);
+  transition: width .35s;
+}
+
+.hidden {
+  display: none !important;
+}
+
+.emoji {
+  font-size: 42px;
+  margin-top: 22px;
+}
+
+#verdict {
+  margin-top: 24px;
+  padding-top: 10px;
+  border-top: 1px solid #34334b;
+}
+
+@keyframes appear {
+  from {
+    opacity: 0;
+    transform: translateY(12px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+/* ФИНАЛ: ВСПЫШКА И СЕРДЦЕ */
 
 .heart-burst {
-    position: fixed;
-    inset: 0;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    pointer-events: none;
-    z-index: 9999;
-    overflow: hidden;
-    animation: screenFlash 1s ease-out forwards;
+  position: fixed;
+  inset: 0;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background: #090a10;
+  z-index: 9999;
+  overflow: hidden;
+  pointer-events: none;
+  animation: finaleFlash 1s ease-out forwards;
 }
 
 .big-heart {
-    font-size: clamp(100px, 35vw, 240px);
-    position: relative;
-    animation: heartLaunch 2.2s cubic-bezier(.15,.8,.25,1) forwards;
-    filter: drop-shadow(0 0 25px #8065ff)
-            drop-shadow(0 0 65px #4bcaff);
+  font-size: clamp(130px, 42vw, 290px);
+  line-height: 1;
+  position: relative;
+  z-index: 2;
+  opacity: 0;
+  filter:
+    drop-shadow(0 0 20px #a994ff)
+    drop-shadow(0 0 65px #55c9ff);
+  animation: heartLaunch 3s ease-in-out forwards;
 }
 
 @keyframes heartLaunch {
-    0% {
-        transform: scale(0) rotate(-25deg);
-        opacity: 0;
-    }
-    35% {
-        transform: scale(1.35) rotate(8deg);
-        opacity: 1;
-    }
-    50% {
-        transform: scale(1) rotate(-5deg);
-    }
-    65% {
-        transform: scale(1.15) rotate(3deg);
-    }
-    80% {
-        transform: scale(1) rotate(0);
-    }
-    100% {
-        transform: scale(1) rotate(0);
-        opacity: 1;
-    }
+  0% {
+    transform: scale(0) rotate(-25deg);
+    opacity: 0;
+  }
+  20% {
+    transform: scale(1.4) rotate(8deg);
+    opacity: 1;
+  }
+  32% {
+    transform: scale(1) rotate(-5deg);
+  }
+  44% {
+    transform: scale(1.18) rotate(4deg);
+  }
+  56% {
+    transform: scale(1) rotate(0);
+  }
+  70% {
+    transform: scale(1.12);
+  }
+  84% {
+    transform: scale(1);
+    opacity: 1;
+  }
+  100% {
+    transform: scale(1.7);
+    opacity: 0;
+  }
 }
 
-@keyframes screenFlash {
-    0% {
-        background: #ffffff00;
-    }
-    12% {
-        background: #a994ff30;
-    }
-    35% {
-        background: #ffffff08;
-    }
-    100% {
-        background: #00000000;
-    }
+@keyframes finaleFlash {
+  0% {
+    background: #090a10;
+  }
+  12% {
+    background: #6650b555;
+  }
+  25% {
+    background: #e8e4ff22;
+  }
+  100% {
+    background: #090a10;
+  }
 }
 
-/* === ФЕЙЕРВЕРКИ === */
+.finale-caption {
+  position: absolute;
+  z-index: 3;
+  bottom: 14%;
+  left: 0;
+  width: 100%;
+  padding: 0 20px;
+  text-align: center;
+  color: #e5e0ff;
+  font-size: clamp(16px, 4vw, 23px);
+  text-shadow: 0 0 18px #8065ff;
+  animation: captionIn 1s ease 1s both;
+}
+
+@keyframes captionIn {
+  from {
+    opacity: 0;
+    transform: translateY(18px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+/* СВЕТЯЩИЕСЯ ЧАСТИЦЫ ФЕЙЕРВЕРКА */
 
 .firework-particle {
-    position: fixed;
-    left: 50%;
-    top: 50%;
-    width: 7px;
-    height: 7px;
-    border-radius: 50%;
-    pointer-events: none;
-    z-index: 10000;
-    box-shadow: 0 0 12px currentColor;
-    animation: fireworkFly 1.5s ease-out forwards;
+  position: fixed;
+  left: var(--origin-x, 50%);
+  top: var(--origin-y, 50%);
+  width: var(--particle-size, 5px);
+  height: var(--particle-size, 5px);
+  border-radius: 50%;
+  background: currentColor;
+  box-shadow: 0 0 12px currentColor, 0 0 24px currentColor;
+  pointer-events: none;
+  z-index: 10001;
+  animation: fireworkFly var(--duration, 1.5s) ease-out forwards;
 }
 
 @keyframes fireworkFly {
-    0% {
-        transform: translate(-50%, -50%) scale(1.5);
-        opacity: 1;
-    }
-    100% {
-        transform:
-            translate(
-                calc(-50% + var(--dx)),
-                calc(-50% + var(--dy))
-            ) scale(0);
-        opacity: 0;
-    }
-}
-
-.heart-burst .heart-caption {
-    position: absolute;
-    bottom: 15%;
-    width: 100%;
-    padding: 0 20px;
-    text-align: center;
-    font-size: clamp(15px, 4vw, 22px);
-    color: #d9d1ff;
+  0% {
+    transform: translate(-50%, -50%) scale(1.4);
+    opacity: 1;
+  }
+  100% {
+    transform:
+      translate(
+        calc(-50% + var(--dx)),
+        calc(-50% + var(--dy))
+      ) scale(0);
     opacity: 0;
-    animation: captionAppear 1s ease 1.3s forwards;
-    text-shadow: 0 0 15px #8065ff;
+  }
 }
 
-@keyframes captionAppear {
-    from {
-        opacity: 0;
-        transform: translateY(15px);
-    }
-    to {
-        opacity: 1;
-        transform: translateY(0);
-    }
+@media (prefers-reduced-motion: reduce) {
+  *, *::before, *::after {
+    animation-duration: .01ms !important;
+    animation-iteration-count: 1 !important;
+    scroll-behavior: auto !important;
+  }
 }
 </style>
 </head>
+
 <body>
 <main class="card">
+
   <div class="tag">Дело № 1811 · Доступ ограничен</div>
+
   <section id="intro">
     <h1>Блять,<br><span>опять ты.</span></h1>
-    <p>Подозреваемая: mzfcrs.<br>
-    Особые приметы: загадочная, вредная и подозрительно милая.</p>
-    <p>Тебе предъявлено несколько вопросов. Отвечать честно необязательно. Мы всё равно будем делать вид, что верим.</p>
-    <button class="primary" onclick="start()">Ладно, начинай допрос →</button>
-    <div class="small">18 ноября. Совпадение? Не думаю.</div>
+
+    <p>
+      Подозреваемая: mzfkrs.<br>
+      Особые приметы: загадочная, вредная и подозрительно милая.
+    </p>
+
+    <p>
+      Тебе предъявлено несколько вопросов.
+      Отвечать честно необязательно.
+      Мы всё равно будем делать вид, что верим.
+    </p>
+
+    <button class="primary" onclick="start()">
+      Ладно, начинай допрос →
+    </button>
+
+    <div class="small">
+      Дело засекречено. Но не для тебя. 😏
+    </div>
   </section>
 
   <section id="quiz" class="hidden">
     <div id="counter"></div>
-    <div class="progress"><div id="bar"></div></div>
+
+    <div class="progress">
+      <div id="bar"></div>
+    </div>
+
     <div class="emoji" id="emoji">🕵️</div>
     <div class="question" id="question"></div>
     <div id="answers"></div>
@@ -188,51 +338,98 @@ button.primary:hover{filter:brightness(1.15)}
 
   <section id="ending" class="hidden">
     <div class="emoji">🖤</div>
+
     <h1>Ладно,<br><span>признаюсь.</span></h1>
+
     <p>Вообще-то это был допрос не тебя, а меня.</p>
-    <p>Потому что ты мне нравишься. С тобой прикольно общаться, и мне хочется узнавать тебя поближе.</p>
-    <p>Вот такая вот хуйня, собачка. Можешь теперь делать вид, что не заметила. 😏</p>
-    <button class="primary" id="verdictButton" onclick="reply()">Вынести вердикт 👀</button> 
-    <p id="goodDay" class="hidden">Хорошего дня 🤗😘</p>
+
+    <p>
+      Потому что ты мне нравишься.
+      С тобой прикольно общаться,
+      и мне хочется узнавать тебя поближе.
+    </p>
+
+    <p>
+      Вот такая вот хуйня, собачка.
+      Можешь теперь делать вид, что не заметила. 😏
+    </p>
+
+    <button class="primary" onclick="reply()">
+      Вынести вердикт 👀
+    </button>
+
     <div id="verdict" class="hidden">
-      <p class="question">Вердикт принят. Но учти: дело ещё не закрыто. 😌</p>
-      <button onclick="copyMessage()">📋 Скопировать мой ответ</button>
+      <p class="question">
+        Вердикт принят. Но учти: дело ещё не закрыто. 😌
+      </p>
+
+      <button onclick="copyMessage()">
+        📋 Скопировать мой ответ
+      </button>
+
       <p class="small" id="copyStatus"></p>
     </div>
-    <button onclick="restart()">Начать допрос заново ↻</button>
+
+    <button onclick="restart()">
+      Начать допрос заново ↻
+    </button>
   </section>
+
 </main>
 
 <script>
 const questions = [
   {
-    emoji:"🦂",
-    q:"Вопрос №1. Почему ты такая загадочная?",
-    a:["Это природный талант 😌","Не твоё дело 😏","Следующий вопрос, следователь"]
+    emoji: "🦂",
+    q: "Вопрос №1. Почему ты такая загадочная?",
+    a: [
+      "Это природный талант 😌",
+      "Не твоё дело 😏",
+      "Следующий вопрос, следователь"
+    ]
   },
   {
-    emoji:"🕵️",
-    q:"Вопрос №2. Ты всегда такая вредная или мне повезло?",
-    a:["Тебе выпал особый приз 🏆","Я вообще-то лапочка","Зафиксируй и не спорь"]
+    emoji: "🕵️",
+    q: "Вопрос №2. Ты всегда такая вредная или мне повезло?",
+    a: [
+      "Тебе выпал особый приз 🏆",
+      "Я вообще-то лапочка",
+      "Зафиксируй и не спорь"
+    ]
   },
   {
-    emoji:"👀",
-    q:"Вопрос №3. Когда пропадаешь, ждёшь, что тебя будут искать?",
-    a:["Может быть 👀","У меня дела вообще-то","А ты искал? 😏"]
+    emoji: "👀",
+    q: "Вопрос №3. Когда пропадаешь, ждёшь, что тебя будут искать?",
+    a: [
+      "Может быть 👀",
+      "У меня дела вообще-то",
+      "А ты искал? 😏"
+    ]
   },
   {
-    emoji:"🤨",
-    q:"Вопрос №4. А если кто-то хочет узнать тебя поближе?",
-    a:["Пусть попробует","Смотря кто такой","Сначала пройди собеседование"]
+    emoji: "🤨",
+    q: "Вопрос №4. А если кто-то хочет узнать тебя поближе?",
+    a: [
+      "Пусть попробует",
+      "Смотря кто такой",
+      "Сначала пройди собеседование"
+    ]
   },
   {
-    emoji:"🚨",
-    q:"Последний вопрос. Ты понимаешь, что с тобой опасно мило общаться?",
-    a:["Я ни при чём 😇","Сам виноват","Это ещё цветочки 😈"]
+    emoji: "🚨",
+    q: "Последний вопрос. Ты понимаешь, что с тобой опасно мило общаться?",
+    a: [
+      "Я ни при чём 😇",
+      "Сам виноват",
+      "Это ещё цветочки 😈"
+    ]
   }
 ];
-let current=0;
-let selected=[];
+
+let current = 0;
+let selected = [];
+let finaleTimer = null;
+
 function start() {
   document.getElementById("intro").classList.add("hidden");
   document.getElementById("ending").classList.add("hidden");
@@ -243,124 +440,200 @@ function start() {
 
   showQuestion();
 }
-function showQuestion(){
-  const item=questions[current];
-  document.getElementById("counter").textContent=`ВОПРОС ${current+1} ИЗ ${questions.length}`;
-  document.getElementById("bar").style.width=`${current/questions.length*100}%`;
-  document.getElementById("emoji").textContent=item.emoji;
-  document.getElementById("question").textContent=item.q;
-  const answers=document.getElementById("answers");
-  answers.innerHTML="";
-  item.a.forEach((answer,index)=>{
-    const btn=document.createElement("button");
-    btn.textContent=answer;
-    btn.onclick=()=>choose(index);
+
+function showQuestion() {
+  const item = questions[current];
+
+  document.getElementById("counter").textContent =
+    `ВОПРОС ${current + 1} ИЗ ${questions.length}`;
+
+  document.getElementById("bar").style.width =
+    `${current / questions.length * 100}%`;
+
+  document.getElementById("emoji").textContent = item.emoji;
+  document.getElementById("question").textContent = item.q;
+
+  const answers = document.getElementById("answers");
+  answers.innerHTML = "";
+
+  item.a.forEach((answer, index) => {
+    const btn = document.createElement("button");
+    btn.textContent = answer;
+    btn.onclick = () => choose(index);
     answers.appendChild(btn);
   });
 }
-function choose(index){
+
+function choose(index) {
   selected.push(index);
   current++;
-  if(current<questions.length) showQuestion();
-  else{
-      document.getElementById("bar").style.width = "100%";
-    document.getElementById("quiz").classList.add("hidden");
-    document.getElementById("ending").classList.remove("hidden");
 
-    epicFinale();
+  if (current < questions.length) {
+    showQuestion();
+    return;
   }
+
+  document.getElementById("bar").style.width = "100%";
+  document.getElementById("quiz").classList.add("hidden");
+  document.getElementById("ending").classList.remove("hidden");
+
+  epicFinale();
 }
+
+/* БОЛЬШОЕ СЕРДЦЕ И ЧЕТЫРЕ ЗАЛПА ФЕЙЕРВЕРКА */
+
 function epicFinale() {
-    // Не запускаем несколько фейерверков одновременно
-    if (document.querySelector(".heart-burst")) return;
+  if (document.querySelector(".heart-burst")) return;
 
-    const overlay = document.createElement("div");
-    overlay.className = "heart-burst";
+  const overlay = document.createElement("div");
+  overlay.className = "heart-burst";
+  overlay.setAttribute("aria-hidden", "true");
 
-    const heart = document.createElement("div");
-    heart.className = "big-heart";
-    heart.textContent = "💜";
+  const heart = document.createElement("div");
+  heart.className = "big-heart";
+  heart.textContent = "💜";
 
-    const caption = document.createElement("div");
-    caption.className = "heart-caption";
-    caption.textContent = "Ну вот. Теперь ты всё знаешь. ✨";
+  const caption = document.createElement("div");
+  caption.className = "finale-caption";
+  caption.textContent = "Ну вот. Теперь ты всё знаешь. ✨";
 
-    overlay.appendChild(heart);
-    overlay.appendChild(caption);
-    document.body.appendChild(overlay);
+  overlay.appendChild(heart);
+  overlay.appendChild(caption);
+  document.body.appendChild(overlay);
 
-    const colors = [
-        "#a994ff",
-        "#55c9ff",
-        "#ffffff",
-        "#8c78ff",
-        "#b9f2ff"
+  const colors = [
+    "#a994ff",
+    "#55c9ff",
+    "#ffffff",
+    "#8c78ff",
+    "#b9f2ff"
+  ];
+
+  const reducedMotion = window.matchMedia(
+    "(prefers-reduced-motion: reduce)"
+  ).matches;
+
+  if (!reducedMotion) {
+    const origins = [
+      [50, 42],
+      [22, 35],
+      [78, 35],
+      [50, 25]
     ];
 
-    // Несколько залпов фейерверков
-    for (let burst = 0; burst < 4; burst++) {
-        setTimeout(() => {
-            for (let i = 0; i < 32; i++) {
-                const particle = document.createElement("span");
-                particle.className = "firework-particle";
+    origins.forEach(([originX, originY], burst) => {
+      setTimeout(() => {
+        for (let i = 0; i < 32; i++) {
+          const particle = document.createElement("span");
+          particle.className = "firework-particle";
 
-                const angle = Math.random() * Math.PI * 2;
-                const distance = 80 + Math.random() * 220;
+          const angle = Math.random() * Math.PI * 2;
+          const distance = 70 + Math.random() * 190;
 
-                particle.style.setProperty(
-                    "--dx",
-                    Math.cos(angle) * distance + "px"
-                );
+          particle.style.setProperty("--origin-x", originX + "%");
+          particle.style.setProperty("--origin-y", originY + "%");
+          particle.style.setProperty(
+            "--dx",
+            Math.cos(angle) * distance + "px"
+          );
+          particle.style.setProperty(
+            "--dy",
+            Math.sin(angle) * distance + "px"
+          );
+          particle.style.setProperty(
+            "--particle-size",
+            (3 + Math.random() * 5) + "px"
+          );
+          particle.style.setProperty(
+            "--duration",
+            (1.1 + Math.random() * .7) + "s"
+          );
 
-                particle.style.setProperty(
-                    "--dy",
-                    Math.sin(angle) * distance + "px"
-                );
+          particle.style.color =
+            colors[Math.floor(Math.random() * colors.length)];
 
-                particle.style.color =
-                    colors[Math.floor(Math.random() * colors.length)];
+          document.body.appendChild(particle);
 
-                particle.style.background = particle.style.color;
+          setTimeout(() => particle.remove(), 2000);
+        }
+      }, burst * 420);
+    });
+  }
 
-                document.body.appendChild(particle);
+  finaleTimer = setTimeout(() => {
+    overlay.remove();
+    finaleTimer = null;
+  }, reducedMotion ? 800 : 3600);
+}
 
-                setTimeout(() => particle.remove(), 1700);
-            }
-        }, burst * 450);
+function reply() {
+  document.getElementById("verdict").classList.remove("hidden");
+}
+
+async function copyMessage() {
+  const message =
+    "Вердикт: подозреваемый мне тоже немного нравится 😏";
+
+  const status = document.getElementById("copyStatus");
+
+  try {
+    if (navigator.clipboard && window.isSecureContext) {
+      await navigator.clipboard.writeText(message);
+      status.textContent =
+        "Ответ скопирован. Отправляй куда знаешь 😉";
+      return;
     }
 
-    // Убираем большой эффект, когда анимация закончилась
-    setTimeout(() => overlay.remove(), 4500);
+    fallbackCopy(message, status);
+  } catch (error) {
+    fallbackCopy(message, status);
+  }
 }
-function reply() {
-  document.getElementById("verdictButton").classList.add("hidden");
-  document.getElementById("verdict").classList.add("hidden");
 
-  const goodDay = document.getElementById("goodDay");
-  goodDay.classList.remove("hidden");
-}
-function copyMessage(){
-  const message="Вердикт: подозреваемый мне тоже немного нравится 😏";
-  const status=document.getElementById("copyStatus");
-  if(navigator.clipboard && window.isSecureContext){
-    navigator.clipboard.writeText(message).then(()=>{
-      status.textContent="Ответ скопирован. Отправляй куда знаешь 😉";
-    }).catch(()=>fallbackCopy(message,status));
-  }else fallbackCopy(message,status);
-}
-function fallbackCopy(message,status){
-  const area=document.createElement("textarea");
-  area.value=message;document.body.appendChild(area);
+function fallbackCopy(message, status) {
+  const area = document.createElement("textarea");
+
+  area.value = message;
+  area.style.position = "fixed";
+  area.style.opacity = "0";
+
+  document.body.appendChild(area);
   area.select();
-  try{document.execCommand("copy");status.textContent="Попробуй вставить ответ в переписку 😉";}
-  catch(e){status.textContent=message;}
+
+  let copied = false;
+
+  try {
+    copied = document.execCommand("copy");
+  } catch (error) {
+    copied = false;
+  }
+
   area.remove();
+
+  status.textContent = copied
+    ? "Ответ скопирован. Отправляй куда знаешь 😉"
+    : "Скопируй вручную: " + message;
 }
-function restart(){
+
+function restart() {
+  if (finaleTimer) {
+    clearTimeout(finaleTimer);
+    finaleTimer = null;
+  }
+
+  document.querySelectorAll(
+    ".heart-burst, .firework-particle"
+  ).forEach(element => element.remove());
+
   document.getElementById("ending").classList.add("hidden");
-  document.getElementById("intro").classList.remove("hidden");
+  document.getElementById("quiz").classList.add("hidden");
   document.getElementById("verdict").classList.add("hidden");
+  document.getElementById("intro").classList.remove("hidden");
+
+  current = 0;
+  selected = [];
 }
 </script>
+
 </body>
 </html>
