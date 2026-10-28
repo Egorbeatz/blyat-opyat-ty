@@ -50,6 +50,120 @@ button.primary:hover{filter:brightness(1.15)}
 .hidden{display:none}
 .emoji{font-size:42px;margin-top:22px}
 @keyframes appear{from{opacity:0;transform:translateY(12px)}to{opacity:1;transform:translateY(0)}}
+  /* === ФИНАЛЬНОЕ СЕРДЦЕ === */
+
+.heart-burst {
+    position: fixed;
+    inset: 0;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    pointer-events: none;
+    z-index: 9999;
+    overflow: hidden;
+    animation: screenFlash 1s ease-out forwards;
+}
+
+.big-heart {
+    font-size: clamp(100px, 35vw, 240px);
+    position: relative;
+    animation: heartLaunch 2.2s cubic-bezier(.15,.8,.25,1) forwards;
+    filter: drop-shadow(0 0 25px #8065ff)
+            drop-shadow(0 0 65px #4bcaff);
+}
+
+@keyframes heartLaunch {
+    0% {
+        transform: scale(0) rotate(-25deg);
+        opacity: 0;
+    }
+    35% {
+        transform: scale(1.35) rotate(8deg);
+        opacity: 1;
+    }
+    50% {
+        transform: scale(1) rotate(-5deg);
+    }
+    65% {
+        transform: scale(1.15) rotate(3deg);
+    }
+    80% {
+        transform: scale(1) rotate(0);
+    }
+    100% {
+        transform: scale(1) rotate(0);
+        opacity: 1;
+    }
+}
+
+@keyframes screenFlash {
+    0% {
+        background: #ffffff00;
+    }
+    12% {
+        background: #a994ff30;
+    }
+    35% {
+        background: #ffffff08;
+    }
+    100% {
+        background: #00000000;
+    }
+}
+
+/* === ФЕЙЕРВЕРКИ === */
+
+.firework-particle {
+    position: fixed;
+    left: 50%;
+    top: 50%;
+    width: 7px;
+    height: 7px;
+    border-radius: 50%;
+    pointer-events: none;
+    z-index: 10000;
+    box-shadow: 0 0 12px currentColor;
+    animation: fireworkFly 1.5s ease-out forwards;
+}
+
+@keyframes fireworkFly {
+    0% {
+        transform: translate(-50%, -50%) scale(1.5);
+        opacity: 1;
+    }
+    100% {
+        transform:
+            translate(
+                calc(-50% + var(--dx)),
+                calc(-50% + var(--dy))
+            ) scale(0);
+        opacity: 0;
+    }
+}
+
+.heart-burst .heart-caption {
+    position: absolute;
+    bottom: 15%;
+    width: 100%;
+    padding: 0 20px;
+    text-align: center;
+    font-size: clamp(15px, 4vw, 22px);
+    color: #d9d1ff;
+    opacity: 0;
+    animation: captionAppear 1s ease 1.3s forwards;
+    text-shadow: 0 0 15px #8065ff;
+}
+
+@keyframes captionAppear {
+    from {
+        opacity: 0;
+        transform: translateY(15px);
+    }
+    to {
+        opacity: 1;
+        transform: translateY(0);
+    }
+}
 </style>
 </head>
 <body>
@@ -143,12 +257,76 @@ function choose(index){
   current++;
   if(current<questions.length) showQuestion();
   else{
-    document.getElementById("bar").style.width="100%";
+      document.getElementById("bar").style.width = "100%";
     document.getElementById("quiz").classList.add("hidden");
     document.getElementById("ending").classList.remove("hidden");
+
+    epicFinale();
   }
 }
-function reply(){
+function epicFinale() {
+    // Не запускаем несколько фейерверков одновременно
+    if (document.querySelector(".heart-burst")) return;
+
+    const overlay = document.createElement("div");
+    overlay.className = "heart-burst";
+
+    const heart = document.createElement("div");
+    heart.className = "big-heart";
+    heart.textContent = "💜";
+
+    const caption = document.createElement("div");
+    caption.className = "heart-caption";
+    caption.textContent = "Ну вот. Теперь ты всё знаешь. ✨";
+
+    overlay.appendChild(heart);
+    overlay.appendChild(caption);
+    document.body.appendChild(overlay);
+
+    const colors = [
+        "#a994ff",
+        "#55c9ff",
+        "#ffffff",
+        "#8c78ff",
+        "#b9f2ff"
+    ];
+
+    // Несколько залпов фейерверков
+    for (let burst = 0; burst < 4; burst++) {
+        setTimeout(() => {
+            for (let i = 0; i < 32; i++) {
+                const particle = document.createElement("span");
+                particle.className = "firework-particle";
+
+                const angle = Math.random() * Math.PI * 2;
+                const distance = 80 + Math.random() * 220;
+
+                particle.style.setProperty(
+                    "--dx",
+                    Math.cos(angle) * distance + "px"
+                );
+
+                particle.style.setProperty(
+                    "--dy",
+                    Math.sin(angle) * distance + "px"
+                );
+
+                particle.style.color =
+                    colors[Math.floor(Math.random() * colors.length)];
+
+                particle.style.background = particle.style.color;
+
+                document.body.appendChild(particle);
+
+                setTimeout(() => particle.remove(), 1700);
+            }
+        }, burst * 450);
+    }
+
+    // Убираем большой эффект, когда анимация закончилась
+    setTimeout(() => overlay.remove(), 4500);
+}
+  function reply(){
   document.getElementById("verdict").classList.remove("hidden");
 }
 function copyMessage(){
