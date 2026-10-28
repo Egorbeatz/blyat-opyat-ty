@@ -192,7 +192,7 @@ button.primary:hover{filter:brightness(1.15)}
     <p>Вообще-то это был допрос не тебя, а меня.</p>
     <p>Потому что ты мне нравишься. С тобой прикольно общаться, и мне хочется узнавать тебя поближе.</p>
     <p>Вот такая вот хуйня, собачка. Можешь теперь делать вид, что не заметила. 😏</p>
-    <button class="primary" onclick="reply()">Вынести вердикт 👀</button>
+    <button class="primary" id="verdictButton" onclick="reply()">Вынести вердикт 👀</button> <p id="goodDay" class="hidden">Хорошего дня 🤗😘</p>
     <div id="verdict" class="hidden">
       <p class="question">Вердикт принят. Но учти: дело ещё не закрыто. 😌</p>
       <button onclick="copyMessage()">📋 Скопировать мой ответ</button>
@@ -325,9 +325,12 @@ function epicFinale() {
 
     // Убираем большой эффект, когда анимация закончилась
     setTimeout(() => overlay.remove(), 4500);
-}
-  function reply(){
-  document.getElementById("verdict").classList.remove("hidden");
+function reply() {
+  document.getElementById("verdictButton").classList.add("hidden");
+  document.getElementById("verdict").classList.add("hidden");
+
+  const goodDay = document.getElementById("goodDay");
+  goodDay.classList.remove("hidden");
 }
 function copyMessage(){
   const message="Вердикт: подозреваемый мне тоже немного нравится 😏";
