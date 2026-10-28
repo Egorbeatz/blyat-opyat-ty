@@ -1,0 +1,178 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Блять, опять ты</title>
+<style>
+*{box-sizing:border-box}
+:root{color-scheme:dark}
+body{
+  margin:0;min-height:100vh;
+  display:flex;align-items:center;justify-content:center;
+  padding:22px;
+  font-family:Arial,Helvetica,sans-serif;
+  color:#f3f2ff;
+  background:
+    radial-gradient(ellipse at 15% 15%,#29204c 0,transparent 45%),
+    radial-gradient(ellipse at 90% 85%,#102d48 0,transparent 40%),
+    #090a10;
+}
+.card{
+  width:min(100%,570px);padding:clamp(25px,6vw,46px);
+  background:rgba(18,19,31,.92);
+  border:1px solid #34334b;border-radius:25px;
+  box-shadow:0 25px 90px #0008;
+  text-align:center;animation:appear .6s ease;
+}
+.tag{
+  display:inline-block;padding:8px 12px;border-radius:30px;
+  background:#25203c;color:#c8b9ff;font-size:12px;
+  letter-spacing:1.5px;text-transform:uppercase;
+}
+h1{font-size:clamp(34px,8vw,52px);line-height:1.05;margin:23px 0 14px;letter-spacing:-1.8px}
+h1 span{color:#a994ff}
+p{color:#b8b8ca;line-height:1.7;font-size:16px}
+.question{font-size:23px;color:#fff;line-height:1.4;margin:27px 0}
+button{
+  width:100%;padding:15px 18px;margin-top:11px;
+  border:1px solid #45435e;border-radius:13px;
+  background:#1b1b2b;color:#f7f5ff;font-size:15px;
+  cursor:pointer;transition:.2s;
+}
+button:hover{transform:translateY(-2px);border-color:#a994ff;background:#29243e}
+button.primary{background:linear-gradient(110deg,#6550b5,#345d91);border:0}
+button.primary:hover{filter:brightness(1.15)}
+.small{font-size:12px;color:#77778e;margin-top:25px}
+.progress{height:4px;background:#252538;border-radius:10px;overflow:hidden;margin-top:25px}
+#bar{height:100%;width:0;background:linear-gradient(90deg,#9a75ff,#55c9ff);transition:width .35s}
+#counter{font-size:12px;color:#85859f;margin-top:12px}
+.hidden{display:none}
+.emoji{font-size:42px;margin-top:22px}
+@keyframes appear{from{opacity:0;transform:translateY(12px)}to{opacity:1;transform:translateY(0)}}
+</style>
+</head>
+<body>
+<main class="card">
+  <div class="tag">Дело № 1811 · Доступ ограничен</div>
+  <section id="intro">
+    <h1>Блять,<br><span>опять ты.</span></h1>
+    <p>Подозреваемая: Скорпионша.<br>
+    Особые приметы: загадочная, вредная и подозрительно милая.</p>
+    <p>Тебе предъявлено несколько вопросов. Отвечать честно необязательно. Мы всё равно будем делать вид, что верим.</p>
+    <button class="primary" onclick="start()">Ладно, начинай допрос →</button>
+    <div class="small">18 ноября. Совпадение? Не думаю.</div>
+  </section>
+
+  <section id="quiz" class="hidden">
+    <div id="counter"></div>
+    <div class="progress"><div id="bar"></div></div>
+    <div class="emoji" id="emoji">🕵️</div>
+    <div class="question" id="question"></div>
+    <div id="answers"></div>
+  </section>
+
+  <section id="ending" class="hidden">
+    <div class="emoji">🖤</div>
+    <h1>Ладно,<br><span>признаюсь.</span></h1>
+    <p>Вообще-то это был допрос не тебя, а меня.</p>
+    <p>Потому что ты мне нравишься. С тобой прикольно общаться, и мне хочется узнавать тебя поближе.</p>
+    <p>Вот такая вот фигня. Можешь теперь делать вид, что не заметила. 😏</p>
+    <button class="primary" onclick="reply()">Вынести вердикт 👀</button>
+    <div id="verdict" class="hidden">
+      <p class="question">Вердикт принят. Но учти: дело ещё не закрыто. 😌</p>
+      <button onclick="copyMessage()">📋 Скопировать мой ответ</button>
+      <p class="small" id="copyStatus"></p>
+    </div>
+    <button onclick="restart()">Начать допрос заново ↻</button>
+  </section>
+</main>
+
+<script>
+const questions = [
+  {
+    emoji:"🦂",
+    q:"Вопрос №1. Почему ты такая загадочная?",
+    a:["Это природный талант 😌","Не твоё дело 😏","Следующий вопрос, следователь"]
+  },
+  {
+    emoji:"🕵️",
+    q:"Вопрос №2. Ты всегда такая вредная или мне повезло?",
+    a:["Тебе выпал особый приз 🏆","Я вообще-то лапочка","Зафиксируй и не спорь"]
+  },
+  {
+    emoji:"👀",
+    q:"Вопрос №3. Когда пропадаешь, ждёшь, что тебя будут искать?",
+    a:["Может быть 👀","У меня дела вообще-то","А ты искал? 😏"]
+  },
+  {
+    emoji:"🤨",
+    q:"Вопрос №4. А если кто-то хочет узнать тебя поближе?",
+    a:["Пусть попробует","Смотря кто такой","Сначала пройди собеседование"]
+  },
+  {
+    emoji:"🚨",
+    q:"Последний вопрос. Ты понимаешь, что с тобой опасно мило общаться?",
+    a:["Я ни при чём 😇","Сам виноват","Это ещё цветочки 😈"]
+  }
+];
+let current=0;
+let selected=[];
+function start(){
+  document.getElementById("intro").classList.add("hidden");
+  document.getElementById("quiz").classList.remove("hidden");
+  current=0;selected=[];showQuestion();
+}
+function showQuestion(){
+  const item=questions[current];
+  document.getElementById("counter").textContent=`ВОПРОС ${current+1} ИЗ ${questions.length}`;
+  document.getElementById("bar").style.width=`${current/questions.length*100}%`;
+  document.getElementById("emoji").textContent=item.emoji;
+  document.getElementById("question").textContent=item.q;
+  const answers=document.getElementById("answers");
+  answers.innerHTML="";
+  item.a.forEach((answer,index)=>{
+    const btn=document.createElement("button");
+    btn.textContent=answer;
+    btn.onclick=()=>choose(index);
+    answers.appendChild(btn);
+  });
+}
+function choose(index){
+  selected.push(index);
+  current++;
+  if(current<questions.length) showQuestion();
+  else{
+    document.getElementById("bar").style.width="100%";
+    document.getElementById("quiz").classList.add("hidden");
+    document.getElementById("ending").classList.remove("hidden");
+  }
+}
+function reply(){
+  document.getElementById("verdict").classList.remove("hidden");
+}
+function copyMessage(){
+  const message="Вердикт: подозреваемый мне тоже немного нравится 😏";
+  const status=document.getElementById("copyStatus");
+  if(navigator.clipboard && window.isSecureContext){
+    navigator.clipboard.writeText(message).then(()=>{
+      status.textContent="Ответ скопирован. Отправляй куда знаешь 😉";
+    }).catch(()=>fallbackCopy(message,status));
+  }else fallbackCopy(message,status);
+}
+function fallbackCopy(message,status){
+  const area=document.createElement("textarea");
+  area.value=message;document.body.appendChild(area);
+  area.select();
+  try{document.execCommand("copy");status.textContent="Попробуй вставить ответ в переписку 😉";}
+  catch(e){status.textContent=message;}
+  area.remove();
+}
+function restart(){
+  document.getElementById("ending").classList.add("hidden");
+  document.getElementById("intro").classList.remove("hidden");
+  document.getElementById("verdict").classList.add("hidden");
+}
+</script>
+</body>
+</html>
